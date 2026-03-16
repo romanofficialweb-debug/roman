@@ -9,20 +9,54 @@
       <p id="currentTime"></p>
       <script src="script.js"></script>
   </body>
-</html
-professional_html = '''<!DOCTYPE html>
+</html<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
     <meta name="description" content="Roman Khan - Student, Gamer & Digital Explorer from Dhamrai, Dhaka. Explore my digital universe.">
+    <meta name="keywords" content="Roman Khan, Dhamrai, Dhaka, Student, Bangladesh, Gamer, Developer, Digital Explorer">
+    <meta name="author" content="Roman Khan">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://romankhanxii.github.io">
+    <meta property="og:title" content="Roman Khan | Digital Universe">
+    <meta property="og:description" content="Student, Gamer & Digital Explorer from Dhamrai, Dhaka, Bangladesh">
+    <meta property="og:image" content="https://i.ibb.co/Y4YFPqWZ/roman-khan.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://romankhanxii.github.io">
+    <meta property="twitter:title" content="Roman Khan | Digital Universe">
+    <meta property="twitter:description" content="Student, Gamer & Digital Explorer from Dhamrai, Dhaka, Bangladesh">
+    <meta property="twitter:image" content="https://i.ibb.co/Y4YFPqWZ/roman-khan.jpg">
+
+    <!-- Theme Color -->
     <meta name="theme-color" content="#0f172a">
+    
     <title>Roman Khan | Digital Universe</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://img.icons8.com/color/96/r.png">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/96/r.png">
+    
+    <!-- Google Analytics - Replace G-XXXXXXXXXX with your actual ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -38,11 +72,18 @@ professional_html = '''<!DOCTYPE html>
             --dark: #0f172a;
             --darker: #020617;
             --light: #f8fafc;
+            --gray: #94a3b8;
             --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body.light-mode {
+            --dark: #f8fafc;
+            --darker: #ffffff;
+            --light: #0f172a;
+            --gray: #475569;
+            --glass: rgba(0, 0, 0, 0.03);
+            --glass-border: rgba(0, 0, 0, 0.08);
         }
 
         * {
@@ -57,17 +98,20 @@ professional_html = '''<!DOCTYPE html>
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
             background: var(--darker);
             color: var(--light);
             overflow-x: hidden;
             line-height: 1.6;
             cursor: none;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
+        body.light-mode .hero-title,
+        body.light-mode .section-title {
+            background: linear-gradient(135deg, var(--light) 0%, var(--gray) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         /* Custom Cursor */
@@ -99,7 +143,58 @@ professional_html = '''<!DOCTYPE html>
             background: var(--primary);
         }
 
-        /* Animated Background */
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            color: var(--light);
+            font-size: 1.2rem;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(180deg);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 160px;
+            right: 30px;
+            padding: 0.75rem 1rem;
+            border-radius: 25px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            color: var(--light);
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        .lang-toggle:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Background */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -109,6 +204,7 @@ professional_html = '''<!DOCTYPE html>
             z-index: -2;
             background: var(--darker);
             overflow: hidden;
+            transition: background 0.5s ease;
         }
 
         .gradient-sphere {
@@ -125,7 +221,6 @@ professional_html = '''<!DOCTYPE html>
             background: var(--primary);
             top: -200px;
             left: -200px;
-            animation-delay: 0s;
         }
 
         .sphere-2 {
@@ -152,7 +247,7 @@ professional_html = '''<!DOCTYPE html>
             66% { transform: translate(-20px, 20px) scale(0.9); }
         }
 
-        /* Glassmorphism Navigation */
+        /* Navigation */
         nav {
             position: fixed;
             top: 20px;
@@ -167,7 +262,6 @@ professional_html = '''<!DOCTYPE html>
             z-index: 1000;
             background: var(--glass);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 50px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -180,6 +274,10 @@ professional_html = '''<!DOCTYPE html>
             background: rgba(15, 23, 42, 0.9);
         }
 
+        body.light-mode nav.scrolled {
+            background: rgba(248, 250, 252, 0.9);
+        }
+
         .logo {
             font-family: 'Outfit', sans-serif;
             font-size: 1.8rem;
@@ -187,7 +285,6 @@ professional_html = '''<!DOCTYPE html>
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             position: relative;
             overflow: hidden;
         }
@@ -261,7 +358,6 @@ professional_html = '''<!DOCTYPE html>
             justify-content: center;
             padding: 120px 5% 80px;
             position: relative;
-            overflow: hidden;
         }
 
         .hero-container {
@@ -271,8 +367,6 @@ professional_html = '''<!DOCTYPE html>
             align-items: center;
             max-width: 1400px;
             width: 100%;
-            position: relative;
-            z-index: 1;
         }
 
         .hero-content {
@@ -307,9 +401,9 @@ professional_html = '''<!DOCTYPE html>
             background: linear-gradient(135deg, #fff 0%, #94a3b8 50%, #fff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             background-size: 200% auto;
             animation: gradient-text 5s linear infinite;
+            min-height: 1.2em;
         }
 
         @keyframes gradient-text {
@@ -322,6 +416,16 @@ professional_html = '''<!DOCTYPE html>
             color: var(--gray);
             margin-bottom: 1rem;
             font-weight: 300;
+        }
+
+        .typing-text::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         .hero-location {
@@ -369,28 +473,13 @@ professional_html = '''<!DOCTYPE html>
             font-size: 1rem;
             position: relative;
             overflow: hidden;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
         }
 
         .btn-primary:hover {
@@ -411,7 +500,7 @@ professional_html = '''<!DOCTYPE html>
             transform: translateY(-3px);
         }
 
-        /* Hero Image with 3D Effect */
+        /* Hero Image */
         .hero-visual {
             position: relative;
             display: flex;
@@ -439,9 +528,7 @@ professional_html = '''<!DOCTYPE html>
             height: 100%;
             border-radius: 30px;
             overflow: hidden;
-            box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                0 0 0 1px var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--glass-border);
         }
 
         .hero-image-wrapper::before {
@@ -470,7 +557,6 @@ professional_html = '''<!DOCTYPE html>
             position: absolute;
             background: var(--glass);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             padding: 1rem 1.5rem;
             border-radius: 20px;
@@ -485,23 +571,9 @@ professional_html = '''<!DOCTYPE html>
             border-color: var(--primary);
         }
 
-        .card-1 {
-            top: 10%;
-            left: -10%;
-            animation-delay: 0s;
-        }
-
-        .card-2 {
-            bottom: 20%;
-            right: -10%;
-            animation-delay: 2s;
-        }
-
-        .card-3 {
-            bottom: 5%;
-            left: -5%;
-            animation-delay: 4s;
-        }
+        .card-1 { top: 10%; left: -10%; animation-delay: 0s; }
+        .card-2 { bottom: 20%; right: -10%; animation-delay: 2s; }
+        .card-3 { bottom: 5%; left: -5%; animation-delay: 4s; }
 
         @keyframes float-card {
             0%, 100% { transform: translateY(0px); }
@@ -520,7 +592,7 @@ professional_html = '''<!DOCTYPE html>
             color: var(--light);
         }
 
-        /* Stats Counter */
+        /* Stats */
         .hero-stats {
             display: flex;
             gap: 2rem;
@@ -539,7 +611,6 @@ professional_html = '''<!DOCTYPE html>
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .stat-label {
@@ -548,7 +619,7 @@ professional_html = '''<!DOCTYPE html>
             margin-top: 0.25rem;
         }
 
-        /* Section Styles */
+        /* Sections */
         section {
             padding: 100px 5%;
             position: relative;
@@ -584,7 +655,6 @@ professional_html = '''<!DOCTYPE html>
             background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .section-subtitle {
@@ -593,7 +663,7 @@ professional_html = '''<!DOCTYPE html>
             line-height: 1.8;
         }
 
-        /* About Section with Bento Grid */
+        /* About Section */
         .about {
             background: linear-gradient(to bottom, var(--darker), var(--dark));
         }
@@ -613,7 +683,6 @@ professional_html = '''<!DOCTYPE html>
             border-radius: 24px;
             padding: 2rem;
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
@@ -702,7 +771,120 @@ professional_html = '''<!DOCTYPE html>
             transform: translateY(-2px);
         }
 
-        /* Gallery Section with Masonry */
+        /* Projects Section */
+        .projects {
+            background: var(--dark);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
+        }
+
+        .project-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-links {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 1rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-links {
+            opacity: 1;
+        }
+
+        .project-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-link {
+            transform: translateY(0);
+        }
+
+        .project-link:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+
+        .project-content p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.25rem 0.75rem;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+
+        /* Gallery Section */
         .gallery-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -782,10 +964,93 @@ professional_html = '''<!DOCTYPE html>
             font-size: 0.95rem;
         }
 
+        /* Blog Section */
+        .blog {
+            background: linear-gradient(to bottom, var(--dark), var(--darker));
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .blog-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--light);
+            line-height: 1.4;
+        }
+
+        .blog-content p {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 0.75rem;
+            color: var(--secondary);
+        }
+
         /* Contact Section */
         .contact {
             background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
-            position: relative;
         }
 
         .contact-container {
@@ -808,7 +1073,6 @@ professional_html = '''<!DOCTYPE html>
             padding: 2rem;
             border-radius: 24px;
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             transition: all 0.4s ease;
             display: flex;
             align-items: flex-start;
@@ -906,7 +1170,6 @@ professional_html = '''<!DOCTYPE html>
             padding: 3rem;
             border-radius: 30px;
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
         }
 
@@ -972,6 +1235,33 @@ professional_html = '''<!DOCTYPE html>
             box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
         }
 
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Visitor Counter */
+        .visitor-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.75rem 1.25rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            color: var(--light);
+            z-index: 998;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .visitor-counter i {
+            color: var(--secondary);
+        }
+
         /* Footer */
         footer {
             padding: 3rem 5%;
@@ -993,7 +1283,6 @@ professional_html = '''<!DOCTYPE html>
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin-bottom: 1rem;
         }
 
@@ -1014,7 +1303,7 @@ professional_html = '''<!DOCTYPE html>
             50% { transform: scale(1.2); }
         }
 
-        /* Scroll Reveal Animation */
+        /* Scroll Reveal */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -1037,7 +1326,7 @@ professional_html = '''<!DOCTYPE html>
             z-index: -1;
         }
 
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 968px) {
             body {
                 cursor: auto;
@@ -1045,6 +1334,22 @@ professional_html = '''<!DOCTYPE html>
             
             .cursor, .cursor-follower {
                 display: none;
+            }
+
+            .theme-toggle, .lang-toggle {
+                top: auto;
+                bottom: 30px;
+                right: 30px;
+            }
+
+            .lang-toggle {
+                bottom: 90px;
+            }
+
+            .visitor-counter {
+                bottom: 150px;
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .hero-container,
@@ -1087,9 +1392,14 @@ professional_html = '''<!DOCTYPE html>
             .hero-stats {
                 justify-content: center;
             }
+
+            .projects-grid,
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        /* Loading Animation */
+        /* Loader */
         .loader {
             position: fixed;
             top: 0;
@@ -1127,12 +1437,41 @@ professional_html = '''<!DOCTYPE html>
             to { transform: rotate(360deg); }
         }
 
-        /* Text Scramble Effect */
-        .scramble-text {
-            display: inline-block;
+        .loader-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
         }
 
-        /* Smooth Scrollbar */
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            z-index: 10001;
+            opacity: 0;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .success-message.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -1145,10 +1484,6 @@ professional_html = '''<!DOCTYPE html>
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 5px;
         }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-        }
     </style>
 </head>
 <body>
@@ -1156,13 +1491,36 @@ professional_html = '''<!DOCTYPE html>
     <div class="loader" id="loader">
         <div class="loader-content">
             <div class="loader-spinner"></div>
-            <p style="color: var(--gray); font-size: 0.9rem;">Loading Experience...</p>
+            <div class="loader-text">Roman Khan</div>
+            <p style="color: var(--gray); font-size: 0.9rem; margin-top: 0.5rem;">Loading Experience...</p>
         </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle"></i>
+        <span>Message sent successfully!</span>
     </div>
 
     <!-- Custom Cursor -->
     <div class="cursor" id="cursor"></div>
     <div class="cursor-follower" id="cursor-follower"></div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Language Toggle -->
+    <button class="lang-toggle" id="langToggle" title="Switch Language">
+        বাং
+    </button>
+
+    <!-- Visitor Counter -->
+    <div class="visitor-counter">
+        <i class="fas fa-eye"></i>
+        <span>Visitors: <span id="visitorCount">0</span></span>
+    </div>
 
     <!-- Animated Background -->
     <div class="bg-animation">
@@ -1178,10 +1536,12 @@ professional_html = '''<!DOCTYPE html>
     <nav id="navbar">
         <div class="logo">Roman Khan</div>
         <ul class="nav-links">
-            <li><a href="#home" class="nav-link">Home</a></li>
-            <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#gallery" class="nav-link">Gallery</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li><a href="#home" class="nav-link" data-key="home">Home</a></li>
+            <li><a href="#about" class="nav-link" data-key="about">About</a></li>
+            <li><a href="#projects" class="nav-link" data-key="projects">Projects</a></li>
+            <li><a href="#gallery" class="nav-link" data-key="gallery">Gallery</a></li>
+            <li><a href="#blog" class="nav-link" data-key="blog">Blog</a></li>
+            <li><a href="#contact" class="nav-link" data-key="contact">Contact</a></li>
         </ul>
         <div class="mobile-menu">
             <i class="fas fa-bars"></i>
@@ -1194,34 +1554,34 @@ professional_html = '''<!DOCTYPE html>
             <div class="hero-content">
                 <div class="hero-badge">
                     <i class="fas fa-circle" style="font-size: 8px; color: var(--secondary);"></i>
-                    Available for opportunities
+                    <span data-key="available">Available for opportunities</span>
                 </div>
-                <h1 class="hero-title scramble-text" data-text="Roman Khan">Roman Khan</h1>
-                <p class="hero-subtitle">Student • Gamer • Digital Explorer</p>
+                <h1 class="hero-title">Roman Khan</h1>
+                <p class="hero-subtitle typing-text" data-key="subtitle">Student • Gamer • Digital Explorer</p>
                 <div class="hero-location">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Dhamrai, Dhaka, Bangladesh</span>
+                    <span data-key="location">Dhamrai, Dhaka, Bangladesh</span>
                 </div>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary magnetic-btn">
-                        <i class="fas fa-paper-plane"></i> Get in Touch
+                        <i class="fas fa-paper-plane"></i> <span data-key="getInTouch">Get in Touch</span>
                     </a>
                     <a href="#about" class="btn btn-glass magnetic-btn">
-                        <i class="fas fa-user"></i> About Me
+                        <i class="fas fa-user"></i> <span data-key="aboutMe">About Me</span>
                     </a>
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item">
                         <div class="stat-number" data-target="5">0</div>
-                        <div class="stat-label">Years Experience</div>
+                        <div class="stat-label" data-key="yearsExp">Years Experience</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number" data-target="50">0</div>
-                        <div class="stat-label">Projects Done</div>
+                        <div class="stat-label" data-key="projectsDone">Projects Done</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number" data-target="100">0</div>
-                        <div class="stat-label">Happy Clients</div>
+                        <div class="stat-label" data-key="happyClients">Happy Clients</div>
                     </div>
                 </div>
             </div>
@@ -1232,42 +1592,42 @@ professional_html = '''<!DOCTYPE html>
                     </div>
                     <div class="floating-card card-1">
                         <i class="fas fa-gamepad" style="color: var(--secondary);"></i>
-                        <span>Gaming Pro</span>
+                        <span data-key="gamingPro">Gaming Pro</span>
                     </div>
                     <div class="floating-card card-2">
                         <i class="fas fa-graduation-cap" style="color: var(--primary);"></i>
-                        <span>Student</span>
+                        <span data-key="student">Student</span>
                     </div>
                     <div class="floating-card card-3">
                         <i class="fas fa-rocket" style="color: var(--accent);"></i>
-                        <span>Explorer</span>
+                        <span data-key="explorer">Explorer</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section with Bento Grid -->
+    <!-- About Section -->
     <section class="about" id="about">
         <div class="section-header reveal">
             <span class="section-tag">
-                <i class="fas fa-user"></i> About Me
+                <i class="fas fa-user"></i> <span data-key="aboutTag">About Me</span>
             </span>
-            <h2 class="section-title">Digital Universe</h2>
-            <p class="section-subtitle">Exploring the intersection of technology, creativity, and passion</p>
+            <h2 class="section-title" data-key="digitalUniverse">Digital Universe</h2>
+            <p class="section-subtitle" data-key="aboutSubtitle">Exploring the intersection of technology, creativity, and passion</p>
         </div>
         
         <div class="bento-grid">
             <div class="bento-item bento-large reveal">
                 <div class="bento-content">
-                    <h3>Hello, I'm Roman! 👋</h3>
-                    <p>I'm a passionate student from Dhamrai, Dhaka, navigating the digital landscape with curiosity and creativity. My journey is about balancing academics with my love for technology and gaming.</p>
-                    <p style="margin-top: 1rem;">When I'm not studying, you'll find me exploring new digital horizons, gaming, or creating something awesome.</p>
+                    <h3 data-key="hello">Hello, I'm Roman! 👋</h3>
+                    <p data-key="aboutText1">I'm a passionate student from Dhamrai, Dhaka, navigating the digital landscape with curiosity and creativity.</p>
+                    <p style="margin-top: 1rem;" data-key="aboutText2">When I'm not studying, you'll find me exploring new digital horizons, gaming, or creating something awesome.</p>
                     <div class="skill-tags">
-                        <span class="skill-tag">Fast Learner</span>
-                        <span class="skill-tag">Tech Enthusiast</span>
-                        <span class="skill-tag">Creative Mind</span>
-                        <span class="skill-tag">Problem Solver</span>
+                        <span class="skill-tag" data-key="fastLearner">Fast Learner</span>
+                        <span class="skill-tag" data-key="techEnthusiast">Tech Enthusiast</span>
+                        <span class="skill-tag" data-key="creativeMind">Creative Mind</span>
+                        <span class="skill-tag" data-key="problemSolver">Problem Solver</span>
                     </div>
                 </div>
             </div>
@@ -1279,16 +1639,16 @@ professional_html = '''<!DOCTYPE html>
             <div class="bento-item reveal">
                 <div class="bento-content">
                     <i class="fas fa-gamepad" style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 1rem;"></i>
-                    <h3>Gaming</h3>
-                    <p>Competitive gaming enthusiast with a passion for strategy and adventure games.</p>
+                    <h3 data-key="gaming">Gaming</h3>
+                    <p data-key="gamingDesc">Competitive gaming enthusiast with a passion for strategy and adventure games.</p>
                 </div>
             </div>
             
             <div class="bento-item reveal">
                 <div class="bento-content">
                     <i class="fas fa-laptop-code" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                    <h3>Technology</h3>
-                    <p>Always exploring the latest tech trends and digital innovations.</p>
+                    <h3 data-key="technology">Technology</h3>
+                    <p data-key="techDesc">Always exploring the latest tech trends and digital innovations.</p>
                 </div>
             </div>
             
@@ -1299,8 +1659,78 @@ professional_html = '''<!DOCTYPE html>
             <div class="bento-item reveal">
                 <div class="bento-content">
                     <i class="fas fa-book-reader" style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i>
-                    <h3>Learning</h3>
-                    <p>Constantly expanding my knowledge across various domains.</p>
+                    <h3 data-key="learning">Learning</h3>
+                    <p data-key="learningDesc">Constantly expanding my knowledge across various domains.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="section-header reveal">
+            <span class="section-tag">
+                <i class="fas fa-code"></i> <span data-key="projectsTag">Portfolio</span>
+            </span>
+            <h2 class="section-title" data-key="featuredProjects">Featured Projects</h2>
+            <p class="section-subtitle" data-key="projectsSubtitle">Some of my recent work and creations</p>
+        </div>
+        
+        <div class="projects-grid">
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800" alt="Project 1">
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 data-key="project1Title">Personal Portfolio</h3>
+                    <p data-key="project1Desc">A modern, responsive portfolio website built with HTML, CSS, and JavaScript.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800" alt="Project 2">
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 data-key="project2Title">Dashboard App</h3>
+                    <p data-key="project2Desc">Interactive data visualization dashboard with real-time updates.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Chart.js</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card reveal">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800" alt="Project 3">
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <h3 data-key="project3Title">Mobile Game</h3>
+                    <p data-key="project3Desc">An addictive mobile game built with Unity and C#.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Unity</span>
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">Mobile</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1311,10 +1741,10 @@ professional_html = '''<!DOCTYPE html>
         <div class="gallery-container">
             <div class="section-header reveal">
                 <span class="section-tag">
-                    <i class="fas fa-images"></i> Portfolio
+                    <i class="fas fa-images"></i> <span data-key="galleryTag">Portfolio</span>
                 </span>
-                <h2 class="section-title">Visual Journey</h2>
-                <p class="section-subtitle">Capturing moments and memories through my lens</p>
+                <h2 class="section-title" data-key="visualJourney">Visual Journey</h2>
+                <p class="section-subtitle" data-key="gallerySubtitle">Capturing moments and memories through my lens</p>
             </div>
             
             <div class="masonry-grid">
@@ -1322,8 +1752,8 @@ professional_html = '''<!DOCTYPE html>
                     <img src="https://i.ibb.co/Y4YFPqWZ/roman-khan.jpg" alt="Portrait" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h4>Portrait</h4>
-                            <p>Authentic self-expression</p>
+                            <h4 data-key="portrait">Portrait</h4>
+                            <p data-key="portraitDesc">Authentic self-expression</p>
                         </div>
                     </div>
                 </div>
@@ -1332,8 +1762,8 @@ professional_html = '''<!DOCTYPE html>
                     <img src="https://i.ibb.co/Y7QvHMLC/1773485776173.png" alt="Style" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h4>Style</h4>
-                            <p>Fashion forward</p>
+                            <h4 data-key="style">Style</h4>
+                            <p data-key="styleDesc">Fashion forward</p>
                         </div>
                     </div>
                 </div>
@@ -1342,8 +1772,8 @@ professional_html = '''<!DOCTYPE html>
                     <img src="https://i.ibb.co/mV4fcswV/Gemini-Generated-Image-8r6jq18r6jq18r6j.png" alt="Creative" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h4>Creative</h4>
-                            <p>Artistic vision</p>
+                            <h4 data-key="creative">Creative</h4>
+                            <p data-key="creativeDesc">Artistic vision</p>
                         </div>
                     </div>
                 </div>
@@ -1352,8 +1782,8 @@ professional_html = '''<!DOCTYPE html>
                     <img src="https://i.ibb.co/HptfR8xT/Gemini-Generated-Image-vpxldzvpxldzvpxl.png" alt="Vibes" loading="lazy">
                     <div class="gallery-overlay">
                         <div class="gallery-content">
-                            <h4>Good Vibes</h4>
-                            <p>Chasing dreams</p>
+                            <h4 data-key="goodVibes">Good Vibes</h4>
+                            <p data-key="vibesDesc">Chasing dreams</p>
                         </div>
                     </div>
                 </div>
@@ -1361,14 +1791,72 @@ professional_html = '''<!DOCTYPE html>
         </div>
     </section>
 
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="section-header reveal">
+            <span class="section-tag">
+                <i class="fas fa-blog"></i> <span data-key="blogTag">Blog</span>
+            </span>
+            <h2 class="section-title" data-key="latestPosts">Latest Posts</h2>
+            <p class="section-subtitle" data-key="blogSubtitle">Thoughts, stories and ideas</p>
+        </div>
+        
+        <div class="blog-grid">
+            <article class="blog-card reveal">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800" alt="Blog 1">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Mar 10, 2026</span>
+                        <span><i class="far fa-clock"></i> 5 min read</span>
+                    </div>
+                    <h3 data-key="blog1Title">My Journey into Web Development</h3>
+                    <p data-key="blog1Desc">How I started learning coding and the resources that helped me along the way...</p>
+                    <a href="#" class="read-more" data-key="readMore">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            
+            <article class="blog-card reveal">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" alt="Blog 2">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Mar 5, 2026</span>
+                        <span><i class="far fa-clock"></i> 3 min read</span>
+                    </div>
+                    <h3 data-key="blog2Title">Gaming Setup Tour 2026</h3>
+                    <p data-key="blog2Desc">A detailed look at my gaming rig and the peripherals I use daily...</p>
+                    <a href="#" class="read-more" data-key="readMore">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            
+            <article class="blog-card reveal">
+                <div class="blog-image">
+                    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800" alt="Blog 3">
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar"></i> Feb 28, 2026</span>
+                        <span><i class="far fa-clock"></i> 4 min read</span>
+                    </div>
+                    <h3 data-key="blog3Title">Balancing Study and Passion</h3>
+                    <p data-key="blog3Desc">Tips on managing time between academics and personal projects...</p>
+                    <a href="#" class="read-more" data-key="readMore">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="section-header reveal">
             <span class="section-tag">
-                <i class="fas fa-envelope"></i> Contact
+                <i class="fas fa-envelope"></i> <span data-key="contactTag">Contact</span>
             </span>
-            <h2 class="section-title">Let's Connect</h2>
-            <p class="section-subtitle">Have a project in mind or just want to say hi? I'd love to hear from you!</p>
+            <h2 class="section-title" data-key="letsConnect">Let's Connect</h2>
+            <p class="section-subtitle" data-key="contactSubtitle">Have a project in mind or just want to say hi? I'd love to hear from you!</p>
         </div>
         
         <div class="contact-container">
@@ -1388,7 +1876,7 @@ professional_html = '''<!DOCTYPE html>
                         <i class="fas fa-phone"></i>
                     </div>
                     <div class="contact-details">
-                        <h4>Phone</h4>
+                        <h4 data-key="phone">Phone</h4>
                         <a href="tel:+8801916274399">+880 1916-274399</a>
                     </div>
                 </div>
@@ -1398,39 +1886,39 @@ professional_html = '''<!DOCTYPE html>
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div class="contact-details">
-                        <h4>Location</h4>
+                        <h4 data-key="locationTitle">Location</h4>
                         <span>Dhamrai, Dhaka, Bangladesh</span>
                     </div>
                 </div>
                 
                 <div class="social-links">
-                    <a href="https://www.facebook.com/share/1AZR8de2Qv/" target="_blank" class="social-btn" aria-label="Facebook">
+                    <a href="https://www.facebook.com/share/1AZR8de2Qv/" target="_blank" class="social-btn">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="https://www.instagram.com/romankhanxii" target="_blank" class="social-btn" aria-label="Instagram">
+                    <a href="https://www.instagram.com/romankhanxii" target="_blank" class="social-btn">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="mailto:romankhanstudent01@gmail.com" class="social-btn" aria-label="Email">
+                    <a href="mailto:romankhanstudent01@gmail.com" class="social-btn">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </div>
             </div>
             
             <div class="contact-form-wrapper reveal">
-                <form id="contact-form">
+                <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                     <div class="form-group">
-                        <label for="name">Your Name</label>
-                        <input type="text" id="name" placeholder="John Doe" required>
+                        <label for="name" data-key="yourName">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="John Doe" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" placeholder="john@example.com" required>
+                        <label for="email" data-key="yourEmail">Your Email</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" placeholder="Tell me about your project..." required></textarea>
+                        <label for="message" data-key="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
                     </div>
-                    <button type="submit" class="submit-btn">
+                    <button type="submit" class="submit-btn" data-key="sendMessage">
                         <i class="fas fa-paper-plane"></i> Send Message
                     </button>
                 </form>
@@ -1443,13 +1931,120 @@ professional_html = '''<!DOCTYPE html>
         <div class="footer-content">
             <div class="footer-logo">Roman Khan</div>
             <p class="footer-text">
-                Crafted with <span class="footer-heart">❤</span> by Roman Khan<br>
-                © 2026 All Rights Reserved. Made in Bangladesh 🇧🇩
+                <span data-key="craftedWith">Crafted with</span> <span class="footer-heart">❤</span> <span data-key="byRoman">by Roman Khan</span><br>
+                © 2026 <span data-key="allRights">All Rights Reserved</span>. <span data-key="madeIn">Made in Bangladesh</span> 🇧🇩
             </p>
         </div>
     </footer>
 
     <script>
+        // Translations
+        const translations = {
+            en: {
+                home: "Home", about: "About", projects: "Projects", gallery: "Gallery", blog: "Blog", contact: "Contact",
+                available: "Available for opportunities", subtitle: "Student • Gamer • Digital Explorer",
+                location: "Dhamrai, Dhaka, Bangladesh", getInTouch: "Get in Touch", aboutMe: "About Me",
+                yearsExp: "Years Experience", projectsDone: "Projects Done", happyClients: "Happy Clients",
+                gamingPro: "Gaming Pro", student: "Student", explorer: "Explorer",
+                aboutTag: "About Me", digitalUniverse: "Digital Universe",
+                aboutSubtitle: "Exploring the intersection of technology, creativity, and passion",
+                hello: "Hello, I'm Roman! 👋",
+                aboutText1: "I'm a passionate student from Dhamrai, Dhaka, navigating the digital landscape with curiosity and creativity.",
+                aboutText2: "When I'm not studying, you'll find me exploring new digital horizons, gaming, or creating something awesome.",
+                fastLearner: "Fast Learner", techEnthusiast: "Tech Enthusiast", creativeMind: "Creative Mind", problemSolver: "Problem Solver",
+                gaming: "Gaming", gamingDesc: "Competitive gaming enthusiast with a passion for strategy and adventure games.",
+                technology: "Technology", techDesc: "Always exploring the latest tech trends and digital innovations.",
+                learning: "Learning", learningDesc: "Constantly expanding my knowledge across various domains.",
+                projectsTag: "Portfolio", featuredProjects: "Featured Projects", projectsSubtitle: "Some of my recent work and creations",
+                project1Title: "Personal Portfolio", project1Desc: "A modern, responsive portfolio website built with HTML, CSS, and JavaScript.",
+                project2Title: "Dashboard App", project2Desc: "Interactive data visualization dashboard with real-time updates.",
+                project3Title: "Mobile Game", project3Desc: "An addictive mobile game built with Unity and C#.",
+                galleryTag: "Portfolio", visualJourney: "Visual Journey", gallerySubtitle: "Capturing moments and memories through my lens",
+                portrait: "Portrait", portraitDesc: "Authentic self-expression", style: "Style", styleDesc: "Fashion forward",
+                creative: "Creative", creativeDesc: "Artistic vision", goodVibes: "Good Vibes", vibesDesc: "Chasing dreams",
+                blogTag: "Blog", latestPosts: "Latest Posts", blogSubtitle: "Thoughts, stories and ideas",
+                blog1Title: "My Journey into Web Development", blog1Desc: "How I started learning coding and the resources that helped me along the way...",
+                blog2Title: "Gaming Setup Tour 2026", blog2Desc: "A detailed look at my gaming rig and the peripherals I use daily...",
+                blog3Title: "Balancing Study and Passion", blog3Desc: "Tips on managing time between academics and personal projects...",
+                readMore: "Read More", contactTag: "Contact", letsConnect: "Let's Connect",
+                contactSubtitle: "Have a project in mind or just want to say hi? I'd love to hear from you!",
+                phone: "Phone", locationTitle: "Location", yourName: "Your Name", yourEmail: "Your Email",
+                message: "Message", sendMessage: "Send Message", craftedWith: "Crafted with", byRoman: "by Roman Khan",
+                allRights: "All Rights Reserved", madeIn: "Made in Bangladesh"
+            },
+            bn: {
+                home: "হোম", about: "আমার সম্পর্কে", projects: "প্রজেক্টস", gallery: "গ্যালারি", blog: "ব্লগ", contact: "যোগাযোগ",
+                available: "সুযোগের জন্য প্রস্তুত", subtitle: "ছাত্র • গেমার • ডিজিটাল এক্সপ্লোরার",
+                location: "ধামরাই, ঢাকা, বাংলাদেশ", getInTouch: "যোগাযোগ করুন", aboutMe: "আমার সম্পর্কে",
+                yearsExp: "বছরের অভিজ্ঞতা", projectsDone: "প্রজেক্ট সম্পন্ন", happyClients: "খুশি ক্লায়েন্ট",
+                gamingPro: "গেমিং প্রো", student: "ছাত্র", explorer: "এক্সপ্লোরার",
+                aboutTag: "আমার সম্পর্কে", digitalUniverse: "ডিজিটাল ইউনিভার্স",
+                aboutSubtitle: "প্রযুক্তি, সৃজনশীলতা এবং আবেগের ছেদে অন্বেষণ",
+                hello: "হ্যালো, আমি রোমান! 👋",
+                aboutText1: "আমি ধামরাই, ঢাকার একজন উৎসাহী ছাত্র, যিনি কৌতূহল এবং সৃজনশীলতার সাথে ডিজিটাল জগতে ভ্রমণ করছি।",
+                aboutText2: "যখন আমি পড়াশোনা করি না, তখন আমাকে নতুন ডিজিটাল দিগন্ত অন্বেষণ, গেমিং বা কিছু দারুন তৈরি করতে দেখা যাবে।",
+                fastLearner: "দ্রুত শিক্ষার্থী", techEnthusiast: "টেক এন্থুসিয়াস্ট", creativeMind: "সৃজনশীল মন", problemSolver: "সমস্যা সমাধানকারী",
+                gaming: "গেমিং", gamingDesc: "কৌশল এবং অ্যাডভেঞ্চার গেমের প্রতি আবেগ সহ প্রতিযোগিতামূলক গেমিং উৎসাহী।",
+                technology: "প্রযুক্তি", techDesc: "সর্বদা নতুন প্রযুক্তি প্রবণতা এবং ডিজিটাল উদ্ভাবন অন্বেষণ করছি।",
+                learning: "শিক্ষা", learningDesc: "বিভিন্ন ক্ষেত্রে আমার জ্ঞান ক্রমাগত বাড়িয়ে চলেছি।",
+                projectsTag: "পোর্টফোলিও", featuredProjects: "বৈশিষ্ট্যযুক্ত প্রজেক্টস", projectsSubtitle: "আমার সাম্প্রতিক কিছু কাজ এবং সৃষ্টি",
+                project1Title: "পার্সোনাল পোর্টফোলিও", project1Desc: "HTML, CSS এবং JavaScript দিয়ে তৈরি একটি আধুনিক, রেসপন্সিভ পোর্টফোলিও ওয়েবসাইট।",
+                project2Title: "ড্যাশবোর্ড অ্যাপ", project2Desc: "রিয়েল-টাইম আপডেট সহ ইন্টারঅ্যাক্টিভ ডেটা ভিজ্যুয়ালাইজেশন ড্যাশবোর্ড।",
+                project3Title: "মোবাইল গেম", project3Desc: "Unity এবং C# দিয়ে তৈরি একটি আসক্তিমূলক মোবাইল গেম।",
+                galleryTag: "পোর্টফোলিও", visualJourney: "ভিজ্যুয়াল জার্নি", gallerySubtitle: "আমার লেন্সের মাধ্যমে মুহূর্ত এবং স্মৃতি ক্যাপচার করা",
+                portrait: "পোর্ট্রেট", portraitDesc: "অথেনটিক সেলফ-এক্সপ্রেশন", style: "স্টাইল", styleDesc: "ফ্যাশন ফরওয়ার্ড",
+                creative: "ক্রিয়েটিভ", creativeDesc: "আর্টিস্টিক ভিশন", goodVibes: "গুড ভাইবস", vibesDesc: "স্বপ্ন পেছনে ছুটছি",
+                blogTag: "ব্লগ", latestPosts: "সর্বশেষ পোস্ট", blogSubtitle: "চিন্তাভাবনা, গল্প এবং আইডিয়া",
+                blog1Title: "ওয়েব ডেভেলপমেন্টে আমার যাত্রা", blog1Desc: "আমি কিভাবে কোডিং শেখা শুরু করলাম এবং যে রিসোর্সগুলো আমাকে সাহায্য করেছে...",
+                blog2Title: "গেমিং সেটআপ ট্যুর ২০২৬", blog2Desc: "আমার গেমিং রিগ এবং আমি দৈনন্দিন ব্যবহার করি এমন পেরিফেরালগুলির বিস্তারিত দেখুন...",
+                blog3Title: "পড়াশোনা এবং আবেগের ভারসাম্য", blog3Desc: "একাডেমিক এবং ব্যক্তিগত প্রজেক্টের মধ্যে সময় পরিচালনার টিপস...",
+                readMore: "আরও পড়ুন", contactTag: "যোগাযোগ", letsConnect: "চলুন সংযুক্ত হই",
+                contactSubtitle: "কোনো প্রজেক্ট মাথায় আছে বা শুধু হাই বলতে চান? আমি আপনার কাছ থেকে শুনতে পেলে খুশি হব!",
+                phone: "ফোন", locationTitle: "অবস্থান", yourName: "আপনার নাম", yourEmail: "আপনার ইমেইল",
+                message: "বার্তা", sendMessage: "বার্তা পাঠান", craftedWith: "ভালোবাসা দিয়ে তৈরি", byRoman: "রোমান খান দ্বারা",
+                allRights: "সর্বস্বত্ব সংরক্ষিত", madeIn: "বাংলাদেশে তৈরি"
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        // Language Toggle
+        document.getElementById('langToggle').addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'bn' : 'en';
+            localStorage.setItem('lang', currentLang);
+            updateLanguage();
+        });
+
+        function updateLanguage() {
+            document.getElementById('langToggle').textContent = currentLang === 'en' ? 'বাং' : 'EN';
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[currentLang][key]) {
+                    el.textContent = translations[currentLang][key];
+                }
+            });
+        }
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        let isDark = !localStorage.getItem('theme') || localStorage.getItem('theme') === 'dark';
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        });
+
+        // Initialize
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+            isDark = false;
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        updateLanguage();
+
         // Remove Loader
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -1472,9 +2067,7 @@ professional_html = '''<!DOCTYPE html>
                 }, 100);
             });
 
-            // Magnetic effect for buttons
-            const magneticBtns = document.querySelectorAll('.magnetic-btn');
-            magneticBtns.forEach(btn => {
+            document.querySelectorAll('.magnetic-btn, .btn, .social-btn, .project-link').forEach(btn => {
                 btn.addEventListener('mouseenter', () => cursor.classList.add('hover'));
                 btn.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
             });
@@ -1527,7 +2120,6 @@ professional_html = '''<!DOCTYPE html>
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Draw connections
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -1623,7 +2215,6 @@ professional_html = '''<!DOCTYPE html>
             });
         };
 
-        // Trigger counters when in view
         const observerOptions = {
             threshold: 0.5
         };
@@ -1654,21 +2245,91 @@ professional_html = '''<!DOCTYPE html>
             });
         });
 
-        // Form Submission
-        document.getElementById('contact-form').addEventListener('submit', (e) => {
+        // Form Submission with Formspree
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // Create ripple effect
-            const btn = e.target.querySelector('.submit-btn');
-            btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            const form = e.target;
+            const btn = form.querySelector('.submit-btn');
+            const originalText = btn.innerHTML;
             
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-                btn.style.background = '';
-                e.target.reset();
-            }, 3000);
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const successMsg = document.getElementById('successMessage');
+                    successMsg.classList.add('show');
+                    form.reset();
+                    
+                    setTimeout(() => {
+                        successMsg.classList.remove('show');
+                    }, 3000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                alert('Something went wrong. Please try again later.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
         });
+
+        // Visitor Counter (using localStorage for demo)
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount') || 0;
+            if (!sessionStorage.getItem('visited')) {
+                count++;
+                localStorage.setItem('visitorCount', count);
+                sessionStorage.setItem('visited', 'true');
+            }
+            document.getElementById('visitorCount').textContent = count;
+        }
+        updateVisitorCount();
+
+        // Typing Effect
+        const typingElement = document.querySelector('.typing-text');
+        const texts = ['Student • Gamer • Digital Explorer', 'Web Developer', 'Tech Enthusiast', 'Creative Designer'];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Start typing effect after initial load
+        setTimeout(type, 3000);
 
         // Text Scramble Effect for Hero Title
         class TextScramble {
@@ -1729,11 +2390,11 @@ professional_html = '''<!DOCTYPE html>
         }
 
         // Initialize scramble effect
-        const heroTitle = document.querySelector('.scramble-text');
+        const heroTitle = document.querySelector('.hero-title');
         if (heroTitle) {
             const fx = new TextScramble(heroTitle);
             let counter = 0;
-            const phrases = ['Roman Khan', 'রোমান খান', 'Student', 'Gamer'];
+            const phrases = ['Roman Khan', 'রোমান খান', 'Roman Khan'];
             
             const next = () => {
                 fx.setText(phrases[counter]).then(() => {
@@ -1747,3 +2408,4 @@ professional_html = '''<!DOCTYPE html>
     </script>
 </body>
 </html>
+
